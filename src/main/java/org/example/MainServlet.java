@@ -1,4 +1,5 @@
 package org.example;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,10 +10,8 @@ public class MainServlet extends HttpServlet {
 
     private final PostController controller;
 
-    public MainServlet() {
-        final PostRepository repository = new PostRepository();
-        final PostService service = new PostService(repository);
-        controller = new PostController(service);
+    public MainServlet(PostController controller) {
+        this.controller = controller;
     }
 
     @Override
@@ -41,17 +40,22 @@ public class MainServlet extends HttpServlet {
 
     private void handleGetAllPosts(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Обработка GET запроса для получения всех постов
+        controller.getAllPosts(req, resp);
     }
 
     private void handleGetPostById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Обработка GET запроса для получения поста по id
+        controller.getPostById(req, resp);
     }
 
     private void handleCreatePost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Обработка POST запроса для создания нового поста
+        controller.createPost(req, resp);
     }
 
     private void handleDeletePost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Обработка DELETE запроса для удаления поста по id
+        controller.deletePost(req, resp);
     }
+
 }
