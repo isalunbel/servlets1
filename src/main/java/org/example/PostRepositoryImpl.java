@@ -1,4 +1,5 @@
 package org.example;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.Optional;
@@ -7,6 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class PostRepositoryImpl implements PostRepository {
     private final List<Post> posts = new CopyOnWriteArrayList<>();
     private final AtomicLong postIdCounter = new AtomicLong(0);
+    private static final String POST_NOT_FOUND_MESSAGE = "Post with id %d not found";
 
     @Override
     public List<Post> all() {
@@ -32,7 +34,7 @@ public class PostRepositoryImpl implements PostRepository {
                     return post;
                 }
             }
-            throw new IllegalArgumentException("Post with id " + post.getId() + " not found");
+            throw new IllegalArgumentException(String.format(POST_NOT_FOUND_MESSAGE, post.getId()));
         }
     }
 
