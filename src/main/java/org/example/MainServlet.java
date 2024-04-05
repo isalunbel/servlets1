@@ -8,14 +8,17 @@ import java.io.IOException;
 
 public class MainServlet extends HttpServlet {
 
-    private final PostController controller;
+    private PostController controller;
+
     private static final String API_POSTS_PATH = "/api/posts";
     private static final String GET_METHOD = "GET";
     private static final String POST_METHOD = "POST";
     private static final String DELETE_METHOD = "DELETE";
 
-    public MainServlet(PostController controller) {
-        this.controller = controller;
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        this.controller = new PostController(new PostService(new PostRepositoryImpl()));
     }
 
     @Override
