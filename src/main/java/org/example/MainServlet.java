@@ -9,6 +9,10 @@ import java.io.IOException;
 public class MainServlet extends HttpServlet {
 
     private final PostController controller;
+    private static final String API_POSTS_PATH = "/api/posts";
+    private static final String GET_METHOD = "GET";
+    private static final String POST_METHOD = "POST";
+    private static final String DELETE_METHOD = "DELETE";
 
     public MainServlet(PostController controller) {
         this.controller = controller;
@@ -21,13 +25,13 @@ public class MainServlet extends HttpServlet {
             final String method = req.getMethod();
 
             // Примитивный маршрутизатор
-            if (method.equals("GET") && path.equals("/api/posts")) {
+            if (method.equals(GET_METHOD) && path.equals(API_POSTS_PATH)) {
                 handleGetAllPosts(req, resp);
-            } else if (method.equals("GET") && path.matches("/api/posts/\\d+")) {
+            } else if (method.equals(GET_METHOD) && path.matches(API_POSTS_PATH + "/\\d+")) {
                 handleGetPostById(req, resp);
-            } else if (method.equals("POST") && path.equals("/api/posts")) {
+            } else if (method.equals(POST_METHOD) && path.equals(API_POSTS_PATH)) {
                 handleCreatePost(req, resp);
-            } else if (method.equals("DELETE") && path.matches("/api/posts/\\d+")) {
+            } else if (method.equals(DELETE_METHOD) && path.matches(API_POSTS_PATH + "/\\d+")) {
                 handleDeletePost(req, resp);
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -39,23 +43,18 @@ public class MainServlet extends HttpServlet {
     }
 
     private void handleGetAllPosts(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Обработка GET запроса для получения всех постов
         controller.getAllPosts(req, resp);
     }
 
     private void handleGetPostById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Обработка GET запроса для получения поста по id
         controller.getPostById(req, resp);
     }
 
     private void handleCreatePost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Обработка POST запроса для создания нового поста
         controller.createPost(req, resp);
     }
 
     private void handleDeletePost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Обработка DELETE запроса для удаления поста по id
         controller.deletePost(req, resp);
     }
-
 }
