@@ -1,9 +1,14 @@
 package org.example;
+
 public class Post {
     private long id;
     private String content;
 
+    // Константы
+    private static final String DEFAULT_CONTENT = "";
+
     public Post() {
+        this.content = DEFAULT_CONTENT;
     }
 
     public Post(long id, String content) {
